@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>kibana 索引生命周期关联不生效问题</title>
+    <link href="/2023/08/10/kibana-%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%85%B3%E8%81%94%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/"/>
+    <url>/2023/08/10/kibana-%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%85%B3%E8%81%94%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h3 id="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题"><a href="#解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题" class="headerlink" title="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题"></a>解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题</h3><p>在Dev tools 中执行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT my-index-patterns-*/_settings</span><br><span class="line">&#123;</span><br><span class="line">    &quot;index&quot;: &#123;</span><br><span class="line">        &quot;lifecycle&quot;: &#123;</span><br><span class="line">            &quot;name&quot;: &quot;my-index-lifecycle&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>上面代码实现为所有以my-index-patterns-开头的索引，配置my-index-lifecycle生命周期策略。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
