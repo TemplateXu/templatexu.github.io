@@ -13,24 +13,25 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="Leo">
   <meta name="keywords" content="">
   
     <meta name="description" content="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题在Dev tools 中执行 12345678PUT my-index-patterns-*&#x2F;_settings&amp;#123;    &quot;index&quot;: &amp;#123;        &quot;lifecycle&quot;: &amp;#123;            &quot;name&quot;: &quot;my-">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kibana 索引生命周期关联不生效问题">
-<meta property="og:url" content="http://example.com/2023/08/10/kibana-%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%85%B3%E8%81%94%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="https://templatexu.github.io/2023/08/10/kibana-%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%85%B3%E8%81%94%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Leo">
 <meta property="og:description" content="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题在Dev tools 中执行 12345678PUT my-index-patterns-*&#x2F;_settings&amp;#123;    &quot;index&quot;: &amp;#123;        &quot;lifecycle&quot;: &amp;#123;            &quot;name&quot;: &quot;my-">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-10T06:36:36.000Z">
-<meta property="article:modified_time" content="2023-08-10T06:39:11.647Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2023-08-10T06:52:52.839Z">
+<meta property="article:author" content="Leo">
+<meta property="article:tag" content="ES">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>kibana 索引生命周期关联不生效问题 - Hexo</title>
+  <title>kibana 索引生命周期关联不生效问题 - Leo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -68,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"templatexu.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -273,7 +274,7 @@
               <div class="markdown-body">
                 
                 <h3 id="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题"><a href="#解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题" class="headerlink" title="解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题"></a>解决在kibana中创建的索引生命周期关联索引模板之后不生效的问题</h3><p>在Dev tools 中执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT my-index-patterns-*/_settings</span><br><span class="line">&#123;</span><br><span class="line">    &quot;index&quot;: &#123;</span><br><span class="line">        &quot;lifecycle&quot;: &#123;</span><br><span class="line">            &quot;name&quot;: &quot;my-index-lifecycle&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">PUT my-index-patterns-*/_settings<br>&#123;<br>    &quot;index&quot;: &#123;<br>        &quot;lifecycle&quot;: &#123;<br>            &quot;name&quot;: &quot;my-index-lifecycle&quot;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>上面代码实现为所有以my-index-patterns-开头的索引，配置my-index-lifecycle生命周期策略。</p>
 
@@ -285,6 +286,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ES/" class="print-no-link">#ES</a>
+      
+    </div>
+  
 </div>
 
 
@@ -294,13 +302,13 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>kibana 索引生命周期关联不生效问题</div>
-      <div>http://example.com/2023/08/10/kibana-索引生命周期关联不生效问题/</div>
+      <div>https://templatexu.github.io/2023/08/10/kibana-索引生命周期关联不生效问题/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
           <div>作者</div>
-          <div>John Doe</div>
+          <div>Leo</div>
         </div>
       
       
