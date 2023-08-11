@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>aws rds mysql 慢日志告警到飞书</title>
+    <link href="/2023/08/11/aws-rds-mysql-%E6%85%A2%E6%97%A5%E5%BF%97%E5%91%8A%E8%AD%A6%E5%88%B0%E9%A3%9E%E4%B9%A6/"/>
+    <url>/2023/08/11/aws-rds-mysql-%E6%85%A2%E6%97%A5%E5%BF%97%E5%91%8A%E8%AD%A6%E5%88%B0%E9%A3%9E%E4%B9%A6/</url>
+    
+    <content type="html"><![CDATA[<h3 id="aws-rds-mysql-慢日志告警到飞书"><a href="#aws-rds-mysql-慢日志告警到飞书" class="headerlink" title="aws rds mysql 慢日志告警到飞书"></a>aws rds mysql 慢日志告警到飞书</h3><ol><li><p>前提条件：配置rds mysql将slowlog打到cloudwatch</p><p>您可以配置 MySQL 数据库实例以将日志数据发布到 Amazon CloudWatch Logs 中的日志组。利用 CloudWatch Logs，可以对日志数据进行实时分析并使用 CloudWatch 创建警报和查看指标。您可以使用 CloudWatch Logs 在高持久性存储中存储日志记录。</p><p>Amazon RDS 将每个 MySQL 数据库日志作为日志组中的单独数据库流进行发布。例如，如果您将导出功能配置为包括慢速查询日志，则慢速查询数据将存储在 <code>/aws/rds/instance/my_instance/slowquery</code> 日志组中的慢速查询日志流中。</p><p>默认情况下，启用错误日志。下表总结了其他 MySQL 日志的要求。</p><table><thead><tr><th align="left">日志</th><th align="left">要求</th></tr></thead><tbody><tr><td align="left">审核日志</td><td align="left">数据库实例必须使用具有 <code>MARIADB_AUDIT_PLUGIN</code> 选项的自定义选项组。</td></tr><tr><td align="left">常规日志</td><td align="left">数据库实例必须使用具有参数设置 <code>general_log = 1</code> 的自定义参数组才能启用常规日志。</td></tr><tr><td align="left">慢速查询日志</td><td align="left">数据库实例必须使用具有参数设置 <code>slow_query_log = 1</code> 的自定义参数组才能启用慢速查询日志。</td></tr><tr><td align="left">日志输出</td><td align="left">数据库实例必须使用具有参数设置 <code>log_output = FILE</code> 的自定义参数组，才能将日志写入文件系统并将日志发布到 CloudWatch Logs。</td></tr></tbody></table></li><li><p>在控制台创建Lambda函数</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> gzip<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> urllib.parse<br><span class="hljs-keyword">import</span> urllib.request<br><br><span class="hljs-comment"># 飞书地址</span><br>webhook_url = <span class="hljs-string">&#x27;xxxxx&#x27;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lambda_handler</span>(<span class="hljs-params">event, context</span>):<br>    <br>    cloudwatch_event = event[<span class="hljs-string">&quot;awslogs&quot;</span>][<span class="hljs-string">&quot;data&quot;</span>]<br>    <br>    <span class="hljs-comment"># event经过压缩的并base64编码，需要先解码再解压缩</span><br>    decode_base64 = base64.b64decode(cloudwatch_event)<br>    decompress_data = gzip.decompress(decode_base64)<br>    <br>    data = json.loads(decompress_data)<br>    message = data[<span class="hljs-string">&#x27;logEvents&#x27;</span>][<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;message&#x27;</span>]<br><br>    payload = &#123;<span class="hljs-string">&#x27;msg_type&#x27;</span>: <span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>: &#123;<span class="hljs-string">&#x27;text&#x27;</span>: <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;message&#125;</span>&#x27;</span>&#125;&#125;<br>    data = json.dumps(payload).encode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>    req = urllib.request.Request(webhook_url, data, &#123;<span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>&#125;)<br>    urllib.request.urlopen(req)<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;message send success&quot;</span><br></code></pre></td></tr></table></figure></li><li><p>添加cloudwatch mysql slow 的流为触发器</p></li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>AWS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>DNS缓存时间行为</title>
     <link href="/2023/08/10/DNS%E7%BC%93%E5%AD%98%E6%97%B6%E9%97%B4%E8%A1%8C%E4%B8%BA/"/>
     <url>/2023/08/10/DNS%E7%BC%93%E5%AD%98%E6%97%B6%E9%97%B4%E8%A1%8C%E4%B8%BA/</url>
